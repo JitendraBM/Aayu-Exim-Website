@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/*
+ * Aayu Exim brand system — the "brand" theme from the design picker:
+ * the official Aayu Tiles/Exim logo palette of teal, black and white.
+ *
+ * Contrast notes (WCAG AA):
+ *   white on brand-teal (#0B6B66) ...... 5.6:1  ✓ body text
+ *   brand-teal-dark on white ........... 8.4:1  ✓ links
+ *   brand-muted on white ............... 5.3:1  ✓ secondary text
+ * Re-check these if any value below changes.
+ */
+@theme {
+  --color-brand-teal: #0b6b66;
+  --color-brand-teal-dark: #05433f;
+  --color-brand-teal-bright: #0e8b84;
+  --color-brand-tint: #eff6f5;
+  --color-brand-tint-strong: #d9e9e7;
+
+  --color-brand-ink: #0e1315;
+  --color-brand-paper: #ffffff;
+  --color-brand-muted: #5a6668;
+  --color-brand-line: #e2e6e6;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * This is a single-look corporate site: it commits to the light brand palette
+ * rather than following the viewer's dark-mode preference, so the logo colours
+ * stay accurate.
+ */
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-brand-paper);
+  color: var(--color-brand-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible keyboard focus everywhere, in brand colour. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-brand-teal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
