@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { BulletList } from "@/components/ui/ContentBlocks";
 import { CTA } from "@/components/ui/CTA";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
 import { StatBand } from "@/components/ui/StatBand";
 import { getIndustrialDivision, industrialDivisions } from "@/content/industrial";
+import { isPending } from "@/lib/placeholder";
 
 /**
  * One file serves all three division landing pages
@@ -53,28 +55,13 @@ export default async function IndustrialDivisionPage({
           key={block.title}
           tone={index % 2 === 0 ? "paper" : "tint"}
           title={block.title}
-          lede={block.body.startsWith("TODO") ? undefined : block.body}
+          lede={isPending(block.body) ? undefined : block.body}
         >
-          {block.body.startsWith("TODO") && (
+          {isPending(block.body) && (
             <p className="text-brand-muted max-w-3xl text-sm italic">Content to be confirmed.</p>
           )}
           {block.bullets && (
-            <ul className="mt-2 grid max-w-4xl gap-3 sm:grid-cols-2">
-              {block.bullets.map((bullet) => {
-                const pending = bullet.startsWith("TODO");
-                return (
-                  <li
-                    key={bullet}
-                    className={`flex gap-3 text-sm ${pending ? "text-brand-muted italic" : "text-brand-ink"}`}
-                  >
-                    <span aria-hidden className="text-brand-teal">
-                      —
-                    </span>
-                    <span>{pending ? "To be confirmed" : bullet}</span>
-                  </li>
-                );
-              })}
-            </ul>
+            <BulletList items={block.bullets} columns={2} className="mt-2 max-w-4xl" />
           )}
         </Section>
       ))}

@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { contact, footerNav, site } from "@/content/site";
+import { isPending } from "@/lib/placeholder";
 
 /**
- * Contact values are rendered through `pending()` so any `TODO:` placeholder
- * appears as an explicit "to be confirmed" line rather than as a real-looking
- * address. This is deliberate — the old WordPress site published the theme's
- * demo address and phone numbers as if they were Aayu Exim's.
+ * Contact values are filtered through `isPending` so a placeholder appears as
+ * an explicit "to be confirmed" line rather than as a real-looking address.
+ * This is deliberate — the old WordPress site published its theme's demo
+ * address and phone numbers as if they were Aayu Exim's.
  */
-function pending(value: string) {
-  return value.startsWith("TODO");
-}
+const pending = isPending;
 
 export function Footer() {
   const year = new Date().getFullYear();

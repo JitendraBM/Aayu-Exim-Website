@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { PlainList } from "@/components/ui/ContentBlocks";
 import { CTA } from "@/components/ui/CTA";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
 import { StatBand } from "@/components/ui/StatBand";
+import { foundingStory, registrations } from "@/content/about";
 import { certifications } from "@/content/ceramic-tiles";
 import { groupStats, pillars } from "@/content/pillars";
 import { site } from "@/content/site";
+import { display, isPending } from "@/lib/placeholder";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -24,9 +27,12 @@ export default function AboutPage() {
         title="An export house built on its own manufacturing"
         lede="Aayu Exim began in ceramic tiles and grew outward. Owning production taught us what buyers abroad actually need from a supplier — predictable quality, honest lead times, and paperwork that clears customs first time. We applied that to industrial project delivery and then to a wider commodity portfolio."
       >
-        <p className="text-brand-muted max-w-3xl text-sm italic">
-          TODO: replace with the company&rsquo;s real founding story — year of incorporation,
-          founders, how the divisions came about, and the markets served.
+        <p
+          className={`text-brand-muted max-w-3xl text-sm leading-relaxed ${
+            isPending(foundingStory) ? "italic" : ""
+          }`}
+        >
+          {display(foundingStory, "Company history to be confirmed.")}
         </p>
       </Section>
 
@@ -56,23 +62,13 @@ export default function AboutPage() {
             <h3 className="text-brand-teal text-xs font-semibold tracking-[0.16em] uppercase">
               Certifications
             </h3>
-            <ul className="text-brand-muted mt-4 space-y-2 text-sm">
-              {certifications.map((item) => (
-                <li key={item} className={item.startsWith("TODO") ? "italic" : ""}>
-                  {item.startsWith("TODO") ? "To be confirmed" : item}
-                </li>
-              ))}
-            </ul>
+            <PlainList items={certifications} />
           </div>
           <div>
             <h3 className="text-brand-teal text-xs font-semibold tracking-[0.16em] uppercase">
               Registrations
             </h3>
-            <p className="text-brand-muted mt-4 text-sm italic">
-              TODO: add IEC (Importer Exporter Code), GST registration, APEDA / Spices Board
-              registration and any other statutory registrations held. Publish only what is actually
-              held and current.
-            </p>
+            <PlainList items={registrations} />
           </div>
         </div>
       </Section>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CardGrid } from "@/components/ui/CardGrid";
+import { ContentBlocks, PlainList } from "@/components/ui/ContentBlocks";
 import { CTA } from "@/components/ui/CTA";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
@@ -49,46 +50,13 @@ export default function CeramicTilesPage() {
       </Section>
 
       <Section tone="paper" eyebrow="How we work" title="From kiln to container">
-        <div className="grid gap-12 lg:grid-cols-3">
-          {manufacturingBlocks.map((block) => (
-            <div key={block.title}>
-              <h3 className="text-lg font-semibold tracking-tight">{block.title}</h3>
-              <p
-                className={`mt-4 text-sm leading-relaxed ${
-                  block.body.startsWith("TODO") ? "text-brand-muted italic" : "text-brand-muted"
-                }`}
-              >
-                {block.body}
-              </p>
-              {block.bullets && (
-                <ul className="text-brand-muted mt-5 space-y-2 text-sm">
-                  {block.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-3">
-                      <span aria-hidden className="text-brand-teal">
-                        —
-                      </span>
-                      <span className={bullet.startsWith("TODO") ? "italic" : ""}>
-                        {bullet.startsWith("TODO") ? "To be confirmed" : bullet}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
+        <ContentBlocks blocks={manufacturingBlocks} />
 
         <div className="border-brand-line mt-16 border-t pt-10">
           <h3 className="text-brand-teal text-xs font-semibold tracking-[0.16em] uppercase">
             Certifications
           </h3>
-          <ul className="text-brand-muted mt-4 space-y-2 text-sm">
-            {certifications.map((item) => (
-              <li key={item} className={item.startsWith("TODO") ? "italic" : ""}>
-                {item.startsWith("TODO") ? "To be confirmed" : item}
-              </li>
-            ))}
-          </ul>
+          <PlainList items={certifications} />
         </div>
       </Section>
 

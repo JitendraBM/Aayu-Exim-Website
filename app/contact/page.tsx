@@ -3,16 +3,13 @@ import { EnquiryForm } from "@/components/EnquiryForm";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
 import { contact } from "@/content/site";
+import { realOnly } from "@/lib/placeholder";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Send an enquiry to Aayu Exim — ceramic tiles, industrial turnkey projects and commodity export.",
 };
-
-function pending(value: string) {
-  return value.startsWith("TODO");
-}
 
 /**
  * Contact details render as an explicit "to be confirmed" line while they are
@@ -28,7 +25,7 @@ function ContactDetail({
   values: readonly string[];
   hrefPrefix?: "tel:" | "mailto:";
 }) {
-  const real = values.filter((value) => !pending(value));
+  const real = realOnly(values);
 
   return (
     <div>
