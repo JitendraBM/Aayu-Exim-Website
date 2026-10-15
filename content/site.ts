@@ -10,10 +10,10 @@
 
 export const site = {
   name: "Aayu Exim",
-  legalName: "TODO: registered legal entity name",
-  tagline: "Global Trade, Delivered with Trust",
+  legalName: "Aayu Exim",
+  tagline: "Trade with Trust",
   description:
-    "Aayu Exim is an Indian export house spanning ceramic tiles, industrial turnkey projects and a broad commodity export portfolio.",
+    "Aayu Exim was founded by people who have set benchmarks in their fields. The Aayu Tiles Group includes ceramic tile and industrial ceramics manufacturers, importers, exporters and ceramic technology specialists.",
   /** Production origin. Update if the final domain differs. */
   url: "https://www.aayuexim.com",
   locale: "en_IN",
@@ -21,16 +21,16 @@ export const site = {
 
 export const contact = {
   addressLines: [
-    "TODO: office address line 1",
-    "TODO: office address line 2",
-    "TODO: city, state, PIN",
+    "Parshwanath Complex, Opp. Kuber Cinema",
+    "8-A National Highway",
+    "Morbi - 363642, Gujarat",
     "India",
   ],
-  phones: ["TODO: primary phone (with +91 country code)"],
-  emails: ["TODO: enquiries@aayuexim.com"],
+  phones: ["+91 98795 04347"],
+  emails: ["info@aayuexim.com"],
   /** Optional; omit entirely rather than guessing. */
-  whatsapp: "TODO: WhatsApp business number",
-  officeHours: "TODO: e.g. Mon–Sat, 09:30–18:30 IST",
+  whatsapp: "+91 98795 04347",
+  officeHours: "Mon–Fri, 09:00–18:00 IST",
 } as const;
 
 export interface NavItem {
@@ -40,8 +40,8 @@ export interface NavItem {
 
 export const primaryNav: NavItem[] = [
   { label: "Ceramic Tiles", href: "/ceramic-tiles" },
-  { label: "Industrial & Turnkey", href: "/industrial" },
-  { label: "Export Directory", href: "/export" },
+  { label: "Industrial Turnkey Projects", href: "/industrial" },
+  { label: "Products", href: "/export" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -57,16 +57,15 @@ export const footerNav: { heading: string; items: NavItem[] }[] = [
     ],
   },
   {
-    heading: "Industrial & Turnkey",
+    heading: "Industrial Turnkey Projects",
     items: [
       { label: "Overview", href: "/industrial" },
       { label: "Factory Construction", href: "/industrial/factory-construction" },
-      { label: "Project Management", href: "/industrial/project-management" },
       { label: "Installation", href: "/industrial/installation" },
     ],
   },
   {
-    heading: "Export Directory",
+    heading: "Products",
     items: [
       { label: "All categories", href: "/export" },
       { label: "Agricultural", href: "/export/agricultural" },
