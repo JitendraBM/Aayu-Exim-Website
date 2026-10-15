@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: PageProps<"/export/[catego
       <Hero eyebrow={category.name} title={product.name} lede={product.summary} />
       <Breadcrumbs
         trail={[
-          { label: "Export Directory", href: "/export" },
+          { label: "Products", href: "/export" },
           { label: category.name, href: `/export/${category.slug}` },
           { label: product.name },
         ]}

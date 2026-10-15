@@ -5,9 +5,11 @@ import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
 import { StatBand } from "@/components/ui/StatBand";
 import { groupStats, pillars } from "@/content/pillars";
-import { site } from "@/content/site";
+import { getCompany } from "@/lib/company";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { site } = await getCompany();
+
   return (
     <>
       <Hero

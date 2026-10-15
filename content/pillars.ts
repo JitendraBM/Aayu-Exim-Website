@@ -18,7 +18,7 @@ export const pillars: Pillar[] = [
   {
     slug: "industrial",
     eyebrow: "Division",
-    title: "Industrial & Turnkey",
+    title: "Industrial Turnkey Projects",
     summary:
       "End-to-end delivery of industrial facilities — from factory construction and project management through to on-site finishing and installation.",
     href: "/industrial",

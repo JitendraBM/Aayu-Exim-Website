@@ -7,7 +7,7 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 const divisions = [
   "Ceramic Tiles",
-  "Industrial & Turnkey",
+  "Industrial Turnkey Projects",
   "Agricultural",
   "Chemicals",
   "Consumer Plastics & Clocks",

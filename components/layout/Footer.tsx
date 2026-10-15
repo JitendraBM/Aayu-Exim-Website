@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { contact, footerNav, site } from "@/content/site";
+import { footerNav } from "@/content/site";
+import type { Company } from "@/lib/company";
 import { isPending } from "@/lib/placeholder";
 
 /**
@@ -7,10 +8,13 @@ import { isPending } from "@/lib/placeholder";
  * an explicit "to be confirmed" line rather than as a real-looking address.
  * This is deliberate — the old WordPress site published its theme's demo
  * address and phone numbers as if they were Aayu Exim's.
+ *
+ * `site` and `contact` are props, not imports: they are editable at /admin and
+ * the root layout resolves the merged values.
  */
 const pending = isPending;
 
-export function Footer() {
+export function Footer({ site, contact }: { site: Company["site"]; contact: Company["contact"] }) {
   const year = new Date().getFullYear();
 
   return (

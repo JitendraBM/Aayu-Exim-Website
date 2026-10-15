@@ -1,15 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { primaryNav, site } from "@/content/site";
+import { primaryNav } from "@/content/site";
 
 /**
  * Sticky site header. The mobile menu is a plain disclosure — no animation
  * library, no portal — which keeps it keyboard-accessible by default.
+ *
+ * `name` and `tagline` arrive as props rather than from `content/site.ts`: they
+ * are editable at /admin, and this is a Client Component so it cannot read the
+ * merged values itself. The root layout resolves them.
  */
-export function Header() {
+export function Header({ name, tagline }: { name: string; tagline: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -19,10 +24,9 @@ export function Header() {
     <header className="border-brand-line bg-brand-paper/95 sticky top-0 z-50 border-b backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-4 sm:px-8">
         <Link href="/" className="flex flex-col leading-none" onClick={() => setOpen(false)}>
-          {/* TODO: replace with the official logo file once supplied (public/brand/). */}
-          <span className="text-brand-ink text-lg font-semibold tracking-tight">{site.name}</span>
+          <Image src="/brand/logo.png" alt={name} width={136} height={40} priority />
           <span className="text-brand-muted mt-1 text-[0.65rem] tracking-[0.14em] uppercase">
-            {site.tagline}
+            {tagline}
           </span>
         </Link>
 

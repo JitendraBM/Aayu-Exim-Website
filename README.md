@@ -55,6 +55,39 @@ content/
 "To be confirmed" in muted italics instead of the raw string — so an unverified spec can never be
 mistaken for a published fact, and a placeholder is visually obvious in review.
 
+### Editing company details without a deploy
+
+The company identity and contact block — legal name, tagline, description, address, phones,
+emails, WhatsApp number, office hours — can also be edited from a password-protected screen at
+**`/admin`**, so a non-developer can maintain them.
+
+`content/site.ts` stays the source of truth in the repo. The admin screen only writes an
+*override* document layered on top of it, so clearing a field restores the committed default (a
+`TODO:` placeholder, rendered as "To be confirmed"). Nothing else on the site is editable this
+way — nav, canonical URL and all page copy remain code.
+
+Saving calls `revalidateTag` on the cached lookup in `lib/company.ts`, which regenerates the
+affected static pages on demand. Edits appear on the public site within seconds; no redeploy.
+
+**Environment variables** (see [.env.example](./.env.example)):
+
+| Variable | Purpose |
+| --- | --- |
+| `ADMIN_PASSWORD` | The shared password for `/admin`. |
+| `ADMIN_SESSION_SECRET` | 32+ random chars signing the session cookie (`openssl rand -base64 32`). |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Vercel KV (Upstash) — set automatically by the dashboard integration. |
+
+Admin fails closed: without **both** `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET`, `/admin`
+refuses to open rather than opening unprotected.
+
+Vercel's filesystem is read-only at runtime, so **production needs the KV store** — that is where
+edits are kept. Locally, leave the KV variables blank and edits fall back to the gitignored file
+`data/company-overrides.json`; the admin screen says so with a "Local mode" banner.
+
+> `npm run check:placeholders` only inspects the committed files in `content/`. It does not see
+> admin overrides, so it still reports a field as outstanding even once someone has filled it in
+> at `/admin`.
+
 ### Adding content
 
 - **A tile range** — add an entry to `tileRanges` in `content/ceramic-tiles.ts`. The page at
@@ -72,7 +105,7 @@ Routes, `generateStaticParams` and `sitemap.xml` all derive from this data autom
 /ceramic-tiles                       Hub — capability stats, ranges
 /ceramic-tiles/[range]               Range detail with ISO 10545 specs
 /industrial                          Industrial & Turnkey overview
-/industrial/[division]               factory-construction | project-management | installation
+/industrial/[division]               factory-construction | installation
 /export                              Commodity Export Directory
 /export/[category]                   Category listing
 /export/[category]/[product]         Product detail — grades, packing, HS code, MOQ

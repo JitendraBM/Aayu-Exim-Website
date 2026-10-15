@@ -7,7 +7,7 @@ import { StatBand } from "@/components/ui/StatBand";
 import { foundingStory, registrations } from "@/content/about";
 import { certifications } from "@/content/ceramic-tiles";
 import { groupStats, pillars } from "@/content/pillars";
-import { site } from "@/content/site";
+import { getCompany } from "@/lib/company";
 import { display, isPending } from "@/lib/placeholder";
 
 export const metadata: Metadata = {
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
     "Aayu Exim is an Indian export house spanning ceramic tile manufacturing, industrial turnkey projects and commodity export.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { site } = await getCompany();
+
   return (
     <>
       <Hero eyebrow="Company" title="About Aayu Exim" lede={site.description} />

@@ -30,10 +30,8 @@ export default async function CategoryPage({ params }: PageProps<"/export/[categ
 
   return (
     <>
-      <Hero eyebrow="Export Directory" title={category.name} lede={category.summary} />
-      <Breadcrumbs
-        trail={[{ label: "Export Directory", href: "/export" }, { label: category.name }]}
-      />
+      <Hero eyebrow="Products" title={category.name} lede={category.summary} />
+      <Breadcrumbs trail={[{ label: "Products", href: "/export" }, { label: category.name }]} />
 
       <Section
         tone="paper"

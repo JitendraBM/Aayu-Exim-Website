@@ -10,8 +10,8 @@ import { getIndustrialDivision, industrialDivisions } from "@/content/industrial
 import { isPending } from "@/lib/placeholder";
 
 /**
- * One file serves all three division landing pages
- * (/industrial/factory-construction, /project-management, /installation).
+ * One file serves both division landing pages
+ * (/industrial/factory-construction, /industrial/installation).
  * Each is prerendered at build time from content/industrial.ts.
  */
 export function generateStaticParams() {
@@ -36,10 +36,10 @@ export default async function IndustrialDivisionPage({
 
   return (
     <>
-      <Hero eyebrow="Industrial & Turnkey" title={division.title} lede={division.intro} />
+      <Hero eyebrow="Industrial Turnkey Projects" title={division.title} lede={division.intro} />
       <Breadcrumbs
         trail={[
-          { label: "Industrial & Turnkey", href: "/industrial" },
+          { label: "Industrial Turnkey Projects", href: "/industrial" },
           { label: division.shortTitle },
         ]}
       />

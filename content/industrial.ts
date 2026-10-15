@@ -43,37 +43,6 @@ export const industrialDivisions: LandingPage[] = [
     ],
   },
   {
-    slug: "project-management",
-    title: "Project Management",
-    shortTitle: "Project Management",
-    metaDescription:
-      "Single-point project management for industrial builds — programme, procurement, vendor coordination, quality and handover.",
-    intro:
-      "One team holds the programme, the budget and the vendor chain. You get a single point of accountability instead of chasing a dozen contractors who each blame the one before them.",
-    blocks: [
-      {
-        title: "What we take responsibility for",
-        body: "We run the project as principal — planning it, buying for it, coordinating every trade on site and answering for the schedule.",
-        bullets: [
-          "Programme planning, sequencing and critical-path tracking",
-          "Procurement and vendor selection against agreed specifications",
-          "Day-to-day site coordination across all trades",
-          "Quality inspection at defined hold points",
-          "Cost control, variation management and reporting",
-          "Commissioning support and documented handover",
-        ],
-      },
-      {
-        title: "Reporting cadence",
-        body: "TODO: describe the standard client reporting rhythm — progress report frequency, site review meetings, photographic records and the escalation path for schedule risks.",
-      },
-      {
-        title: "Where this fits best",
-        body: "This service suits clients building outside their home region, first-time industrial builders, and companies whose internal engineering team is already committed elsewhere and cannot resource a full-time site presence.",
-      },
-    ],
-  },
-  {
     slug: "installation",
     title: "Installation & Finishing",
     shortTitle: "Installation",

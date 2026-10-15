@@ -16,19 +16,19 @@ export const manufacturingStats: Stat[] = [
     note: "Wholly owned and operated",
   },
   {
-    value: "TODO",
+    value: "60,000 sq. ft.",
     label: "Combined daily capacity",
-    note: "TODO: confirm sq. m. per day across all units",
+    note: "Across all units",
   },
   {
-    value: "TODO",
+    value: "6",
     label: "Kiln lines",
-    note: "TODO: confirm total production lines",
+    note: "Total production lines",
   },
   {
-    value: "TODO",
+    value: "100",
     label: "Monthly export volume",
-    note: "TODO: confirm containers shipped per month",
+    note: "Containers shipped per month",
   },
 ];
 
@@ -60,13 +60,33 @@ export const certifications: string[] = [
 export const tileRanges: TileRange[] = [
   {
     slug: "glazed-vitrified",
-    name: "Glazed Vitrified Tiles (GVT)",
+    name: "Polished Glazed Vitrified Tiles (PGVT) & GVT Tiles",
     summary:
-      "Full-body vitrified base with a digitally printed glazed surface. The broadest design range we produce — marble, stone, wood and concrete looks for floors and feature walls.",
+      "Porcelain tiles as EU standard, vitrified base with a digitally printed glazed surface. The broadest design range we produce — marble, stone, wood and concrete looks for floors and feature walls.",
     metaDescription:
-      "Glazed vitrified tiles (GVT) manufactured and exported by Aayu Exim — sizes, finishes and technical specifications.",
-    sizes: ["600x600 mm", "600x1200 mm", "800x800 mm", "TODO: confirm full size list"],
-    finishes: ["Matt", "Glossy", "Carving / textured", "TODO: confirm finish list"],
+      "Polished glazed vitrified tiles (PGVT) and GVT tiles manufactured and exported by Aayu Exim — sizes, finishes and technical specifications.",
+    sizes: [
+      "300x600 mm",
+      "600x600 mm",
+      "600x1200 mm",
+      "800x800 mm",
+      "800x1200 mm",
+      "800x1600 mm",
+      "800x2400x15mm",
+      "1200x1800 mm",
+      "1200x2400 mm",
+    ],
+    finishes: [
+      "Matt",
+      "Glossy",
+      "Endless",
+      "Carving",
+      "High gloss",
+      "Metallic",
+      "Cementous",
+      "Book match",
+      "Elevation",
+    ],
     applications: [
       "Residential flooring",
       "Commercial and retail flooring",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
-import { contact } from "@/content/site";
+import { getCompany } from "@/lib/company";
 import { realOnly } from "@/lib/placeholder";
 
 export const metadata: Metadata = {
@@ -56,7 +56,9 @@ function ContactDetail({
   );
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { contact } = await getCompany();
+
   return (
     <>
       <Hero

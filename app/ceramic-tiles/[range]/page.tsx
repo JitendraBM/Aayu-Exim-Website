@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CTA } from "@/components/ui/CTA";
 import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
-import { DetailList, SpecTable } from "@/components/ui/SpecTable";
+import { DetailList } from "@/components/ui/SpecTable";
 import { getTileRange, tileRanges } from "@/content/ceramic-tiles";
 
 export function generateStaticParams() {
@@ -37,17 +37,6 @@ export default async function TileRangePage({ params }: PageProps<"/ceramic-tile
           <DetailList title="Sizes" items={range.sizes} />
           <DetailList title="Finishes" items={range.finishes} />
           <DetailList title="Applications" items={range.applications} />
-        </div>
-      </Section>
-
-      <Section
-        tone="tint"
-        eyebrow="Technical data"
-        title="Specifications"
-        lede="Test methods follow the ISO 10545 series. Values marked as to be confirmed are pending verification against current production batches."
-      >
-        <div className="border-brand-line bg-brand-paper max-w-3xl rounded-sm border px-8 py-4">
-          <SpecTable rows={range.specs} caption={`Technical specifications for ${range.name}`} />
         </div>
       </Section>
 

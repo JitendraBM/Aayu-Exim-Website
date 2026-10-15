@@ -7,15 +7,15 @@ import { StatBand } from "@/components/ui/StatBand";
 import { industrialDivisions, industrialIntro, industrialStats } from "@/content/industrial";
 
 export const metadata: Metadata = {
-  title: "Industrial & Turnkey",
+  title: "Industrial Turnkey Projects",
   description:
-    "Aayu Exim's Industrial & Turnkey division — factory construction, project management, and in-house POP, ACP, electrical and tile-laying installation.",
+    "Aayu Exim's Industrial Turnkey Projects division — factory construction, project management, and in-house POP, ACP, electrical and tile-laying installation.",
 };
 
 export default function IndustrialPage() {
   return (
     <>
-      <Hero eyebrow="Division" title="Industrial & Turnkey" lede={industrialIntro} />
+      <Hero eyebrow="Division" title="Industrial Turnkey Projects" lede={industrialIntro} />
 
       <Section
         tone="paper"

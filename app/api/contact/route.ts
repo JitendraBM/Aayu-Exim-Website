@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 /**
  * Enquiry form handler.
  *
- * TODO (before launch): wire this to a real delivery mechanism. It currently
- * validates and logs, then returns success — so no enquiry actually reaches
- * anyone. Pick one:
- *   - transactional email (Resend / SendGrid / AWS SES) to contact.emails
- *   - a CRM or shared inbox webhook
- * Add the provider key as an environment variable; never commit it.
+ * Validates the submission, drops honeypot traffic, then emails it to the
+ * enquiries inbox through Google Workspace SMTP. Reply-To is the enquirer, so
+ * replying from Gmail goes straight back to them.
+ *
+ * Configuration (see .env.example): SMTP_USER + SMTP_PASS (a Google App
+ * Password, never the account password), optional ENQUIRY_TO. Without them,
+ * production fails closed — the form shows an error instead of a false
+ * "sent" — while development only logs the enquiry.
  */
 
 interface Enquiry {
@@ -26,6 +29,31 @@ function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+/** Trim, cap length and flatten newlines for single-line fields. */
+function oneLine(value: string | undefined, max = 200): string {
+  return (value ?? "")
+    .replace(/[\r\n]+/g, " ")
+    .trim()
+    .slice(0, max);
+}
+
+function getTransport() {
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!user || !pass) return null;
+
+  return {
+    from: user,
+    to: process.env.ENQUIRY_TO || user,
+    transporter: nodemailer.createTransport({
+      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: Number(process.env.SMTP_PORT || 465) === 465,
+      auth: { user, pass },
+    }),
+  };
+}
+
 export async function POST(request: Request) {
   let body: Partial<Enquiry>;
 
@@ -40,8 +68,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const name = body.name?.trim();
-  const email = body.email?.trim();
+  const name = oneLine(body.name, 120);
+  const email = oneLine(body.email, 254);
   const message = body.message?.trim();
 
   if (!name || !email || !message) {
@@ -59,16 +87,60 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Your message is too long." }, { status: 400 });
   }
 
-  // TODO: replace this with real delivery. Until then the enquiry only reaches
-  // the server log, which nobody monitors — do not go live in this state.
-  console.info("[enquiry] received", {
-    name,
-    email,
-    company: body.company?.trim() || null,
-    country: body.country?.trim() || null,
-    division: body.division?.trim() || null,
-    messageLength: message.length,
-  });
+  const company = oneLine(body.company);
+  const country = oneLine(body.country);
+  const division = oneLine(body.division);
+
+  const mail = getTransport();
+
+  if (!mail) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[enquiry] SMTP_USER/SMTP_PASS not set — enquiry not delivered");
+      return NextResponse.json(
+        { error: "Your enquiry could not be sent. Please email us directly." },
+        { status: 500 },
+      );
+    }
+    console.info("[enquiry] SMTP not configured; logged only (dev)", {
+      name,
+      email,
+      company: company || null,
+      country: country || null,
+      division: division || null,
+      messageLength: message.length,
+    });
+    return NextResponse.json({ ok: true });
+  }
+
+  const text = [
+    `Name:     ${name}`,
+    `Email:    ${email}`,
+    `Company:  ${company || "-"}`,
+    `Country:  ${country || "-"}`,
+    `Interest: ${division || "-"}`,
+    "",
+    "Requirement:",
+    message,
+    "",
+    "—",
+    "Sent from the enquiry form on aayuexim.com. Reply to this email to answer the enquirer.",
+  ].join("\n");
+
+  try {
+    await mail.transporter.sendMail({
+      from: { name: "Aayu Exim Website", address: mail.from },
+      to: mail.to,
+      replyTo: { name, address: email },
+      subject: `Website enquiry: ${division || "General"} — ${name}${company ? ` (${company})` : ""}`,
+      text,
+    });
+  } catch (error) {
+    console.error("[enquiry] delivery failed", error);
+    return NextResponse.json(
+      { error: "Your enquiry could not be sent. Please try again or email us directly." },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }

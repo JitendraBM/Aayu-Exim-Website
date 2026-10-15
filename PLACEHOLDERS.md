@@ -25,7 +25,7 @@ It lists every remaining `TODO:` and **fails the build if any of the old WordPre
 | Email address(es) | `content/site.ts` → `contact.emails` | A monitored inbox. |
 | Office hours | `content/site.ts` → `contact.officeHours` | Include the timezone (IST). |
 | Legal entity name | `content/site.ts` → `site.legalName` | As registered. |
-| **Enquiry form delivery** | `app/api/contact/route.ts` | **The form currently goes nowhere.** Wire an email provider or CRM webhook. See below. |
+| **Enquiry form email credentials** | Vercel env vars | Code sends via Google Workspace SMTP. Set `SMTP_USER` + `SMTP_PASS` (App Password) — see below. |
 | Logo file | `public/brand/` + `components/layout/Header.tsx` | Header currently renders the name as text. |
 
 ## Priority 2 — credibility. Buyers check these.
@@ -46,7 +46,6 @@ It lists every remaining `TODO:` and **fails the build if any of the old WordPre
 | Tile sizes, finishes, ISO 10545 specs | `content/ceramic-tiles.ts` → `tileRanges[].specs` |
 | Tile QC process and export packing copy | `content/ceramic-tiles.ts` → `manufacturingBlocks` |
 | Statutory approvals support copy | `content/industrial.ts` → factory-construction |
-| Client reporting cadence | `content/industrial.ts` → project-management |
 | Installation crew capacity, panel brands, electrical licence | `content/industrial.ts` → installation |
 | Agricultural grades, packing, HS codes, MOQ | `content/export/agricultural.ts` |
 | Chemical grades, packing, HS codes, SDS/REACH status | `content/export/chemicals.ts` |
@@ -68,16 +67,23 @@ It lists every remaining `TODO:` and **fails the build if any of the old WordPre
 
 ---
 
-## Wiring up the enquiry form
+## Enquiry form email
 
-`app/api/contact/route.ts` validates the submission, drops bot traffic via a honeypot, then logs it
-and returns success. **Nobody receives it.** To finish it:
+`app/api/contact/route.ts` validates the submission, drops bot traffic via a honeypot, then emails
+it to info@aayuexim.com through Google Workspace SMTP (nodemailer). Reply-To is set to the
+enquirer, so replying in Gmail answers them directly. To switch it on:
 
-1. Pick a provider (Resend, SendGrid, AWS SES) or a CRM webhook.
-2. Add the API key as an environment variable — in `.env.local` for development and in the Vercel
-   project settings for production. Never commit it.
-3. Replace the `console.info` call with the send, and return a 500 if the send fails so the form
-   surfaces a real error to the user instead of a false success.
+1. Sign in to Google as info@aayuexim.com → Google Account → Security. Turn on **2-Step
+   Verification** if it is off, then open **App passwords** and create one (name it
+   "aayuexim website"). If the option is missing, a Workspace admin must allow 2-Step
+   Verification for the account.
+2. Set `SMTP_USER=info@aayuexim.com` and `SMTP_PASS=<the 16-character app password>` (see
+   `.env.example`) in `.env.local` for development and in Vercel → Project → Settings →
+   Environment Variables for production. Never commit them. Redeploy after adding.
+3. Submit the form on the live site and confirm the email arrives.
+
+Without the credentials, production returns an error to the visitor rather than a false success;
+development only logs the enquiry.
 
 ---
 
